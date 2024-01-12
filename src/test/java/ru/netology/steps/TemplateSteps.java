@@ -27,16 +27,16 @@ public class TemplateSteps {
         dashboardPage = verificationPage.validVerify(DataHelper.getVerificationCode(authInfo));
     }
 
-    @Когда("пользователь переводит {int} рублей с карты с номером 5559 0000 0000 0002 на свою 1 карту с главной страницы")
-    public void transferFromSecondCardToFirstCard(Integer amount) {
-        transferPage = dashboardPage.selectCardToTransfer(DataHelper.getFirstCardInfo());
-        dashboardPage = transferPage.makeValidTransfer(String.valueOf(amount), DataHelper.getSecondCardInfo());
+    @Когда("пользователь переводит {int} рублей с карты с номером {string} на свою {int}-ю карту с главной страницы")
+    public void transferFromSecondCardToFirstCard(Integer amount, String cardNumber, int index) {
+        transferPage = dashboardPage.selectCardToTransfer(DataHelper.getCardByCardNumber(cardNumber));
+        dashboardPage = transferPage.makeValidTransfer(String.valueOf(amount), DataHelper.getCardByIndex(index));
     }
 
-    @Тогда("баланс его 1 карты из списка на главной странице должен стать 15 000 рублей")
-    public void verifyCardBalance() {
-        int balance = dashboardPage.getCardBalance(DataHelper.getFirstCardInfo());
-        assertEquals(balance, 15000);
+    @Тогда("баланс его {int}-й карты из списка на главной странице должен стать {int} рублей")
+    public void verifyCardBalance(int index, int expectedBalance) {
+        int balance = dashboardPage.getCardBalance(index);
+        assertEquals(balance, expectedBalance);
     }
 
 }

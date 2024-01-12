@@ -30,6 +30,11 @@ public class DashboardPage {
         return extractBalance(text);
     }
 
+    public int getCardBalance(int index) {
+        String text = cards.get(index).getText();
+        return extractBalance(text);
+    }
+
     private int extractBalance(String text) {
         int start = text.indexOf(balanceStart);
         int finish = text.indexOf(balanceFinish);
